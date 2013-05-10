@@ -24,11 +24,13 @@ public interface IDatabase {
 	
 	public boolean updateUserProfile(String username, UserProfile updatedProfile);
 
-	UserProfile findUserProfileByUserId(int id);
+	UserProfile findUserProfileByUserId(int id) throws SQLException;
 
-	int getAmountUsers();
+	Integer getAmountUsers() throws SQLException;
 
 	public boolean deleteUser(String username);
+
+	public UserProfile[] updateLeaderboard() throws SQLException;
 
 //	public boolean uniqueUser(String username);
 
