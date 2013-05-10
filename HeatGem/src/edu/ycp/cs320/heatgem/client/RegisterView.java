@@ -154,42 +154,28 @@ public class RegisterView extends Composite {
 		//TO-DO: prevent registering blank user and other blank text boxes
 		if(username.equals("") || password.equals("") || confirmPassword.equals("") || email.equals("")){
 			errorLabel.setText("Must fill in the above fields. Try again.");
-		} else if (unique == false) {
-			errorLabel.setText("Error: Username already exists");
 		} else if(password.equals(confirmPassword)){
 			// add user
-			RPC.userService.addUser(username, password, confirmPassword, email,  new AsyncCallback<Void>() {
+			RPC.userService.addUser(username, password, confirmPassword, email,  new AsyncCallback<Boolean>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
 					// show error message
-					errorLabel.setText("Could not communicate with server?");
+					errorLabel.setText("Could not communicate with server");
 					
 				}
 
 				@Override
-				public void onSuccess(Void result) {
+				public void onSuccess(Boolean result) {
 					// TODO Auto-generated method stub
 					
-					
-					// if username entered during registration is already taken by another user in database
-					//else if(username == ){
-						//errorLabel.setText("Username already taken, pick a new one.");
-					//} 
-					
-					//if the email entered during registration is already in use in database, show error message
-					//else if(email == ) {
-						//errorLabel.setText("Email already in use. Try again.");
-					//}
-					
-				
-						//Create new row in user table of database
-						
-						
+					if (result == false) {
+						errorLabel.setText("Username/email already exists");
+					} else { 
 						//register successful, change to login view
 						LoginView view = new LoginView();
 						HeatGem.setView(view);
-				
+					}
 				}
 				
 			});

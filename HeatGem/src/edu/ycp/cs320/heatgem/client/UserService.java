@@ -13,7 +13,7 @@ import edu.ycp.cs320.heatgem.shared.UserProfile;
 public interface UserService extends RemoteService {
 	public User logIn(String username, String password);
 	
-	public void addUser(String username, String password, String confirmPassword, String email);
+	public Boolean addUser(String username, String password, String confirmPassword, String email);
 	
 	public Boolean deleteUserAccount(String username);
 	

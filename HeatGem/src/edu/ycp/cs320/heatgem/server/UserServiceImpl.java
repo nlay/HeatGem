@@ -22,9 +22,14 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 	}
 	
 	@Override
-	public void addUser(String username, String password, String confirmPassword, String email){
-		DB.instance().addUser(username, password, confirmPassword, email);
-		
+	public Boolean addUser(String username, String password, String confirmPassword, String email){
+		try {
+			return DB.instance().addUser(username, password, confirmPassword, email);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 //	@Override

@@ -10,7 +10,7 @@ public interface UserServiceAsync {
 	void logIn(String username, String password, AsyncCallback<User> callback);
 
 	void addUser(String username, String password, String confirmPassword,
-			String email, AsyncCallback<Void> callback);
+			String email, AsyncCallback<Boolean> callback);
 
 	void deleteUserAccount(String username, AsyncCallback<Boolean> asyncCallback);
 

@@ -15,19 +15,21 @@ import edu.ycp.cs320.heatgem.shared.UserProfile;
 
 public class LeaderBoard extends Composite {
 	private UserProfile[] highScoreList = new UserProfile[10];
-	private UserProfile temp = new UserProfile();
 	int size;
 	private String username;
 	private FlexTable t = new FlexTable();
 	
 	public LeaderBoard(){
-		
+
+	    updateHighScoreList();
+	    
 		LayoutPanel layoutPanel = new LayoutPanel();
 		initWidget(layoutPanel);
+		t.setCellPadding(4);
 		
 		layoutPanel.add(t);
-		layoutPanel.setWidgetLeftWidth(t, 32.0, Unit.PX, 325.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(t, 14.0, Unit.PX, 70.0, Unit.PX);
+		layoutPanel.setWidgetLeftWidth(t, 32.0, Unit.PX, 400.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(t, 14.0, Unit.PX, 400.0, Unit.PX);
 		
 		
 	    t.setText(0, 0, "Username");
@@ -37,20 +39,21 @@ public class LeaderBoard extends Composite {
 	    t.setText(0, 4, "Level");
 	    t.setText(0, 5, "Wins");
 	    t.setText(0, 6, "Losses");
-	 
-	    updateHighScoreList();
 	    t.setBorderWidth(1);
 	    
-	    // DEBUG testing values to be deleted later
-	    Label lbltestHigh = new Label("testHigh");
-	    layoutPanel.add(lbltestHigh);
-	    layoutPanel.setWidgetLeftWidth(lbltestHigh, 20.0, Unit.PX, 56.0, Unit.PX);
-	    layoutPanel.setWidgetTopHeight(lbltestHigh, 88.0, Unit.PX, 18.0, Unit.PX);
+
 	    
-	    Label lbltestLow = new Label("testLow");
-	    layoutPanel.add(lbltestLow);
-	    layoutPanel.setWidgetLeftWidth(lbltestLow, 20.0, Unit.PX, 56.0, Unit.PX);
-	    layoutPanel.setWidgetTopHeight(lbltestLow, 119.0, Unit.PX, 18.0, Unit.PX);
+	    
+	    // DEBUG testing values to be deleted later
+//	    Label lbltestHigh = new Label("testHigh");
+//	    layoutPanel.add(lbltestHigh);
+//	    layoutPanel.setWidgetLeftWidth(lbltestHigh, 20.0, Unit.PX, 56.0, Unit.PX);
+//	    layoutPanel.setWidgetTopHeight(lbltestHigh, 88.0, Unit.PX, 18.0, Unit.PX);
+//	    
+//	    Label lbltestLow = new Label("testLow");
+//	    layoutPanel.add(lbltestLow);
+//	    layoutPanel.setWidgetLeftWidth(lbltestLow, 20.0, Unit.PX, 56.0, Unit.PX);
+//	    layoutPanel.setWidgetTopHeight(lbltestLow, 119.0, Unit.PX, 18.0, Unit.PX);
 		
 	}
 	
@@ -70,16 +73,30 @@ public class LeaderBoard extends Composite {
 
 			@Override
 			public void onSuccess(UserProfile[] result) {
-				// TODO Auto-generated method stub
 				highScoreList = result;
-				System.out.println("Leaderboard Update SUCCESS");
-				System.out.println(result[0].getName());
-				System.out.println(result[1].getName());
-				//System.out.println(result[].getName());
 				
+				//TODO: Sort here by score before setting labels
+				
+				for (int i = 0; i < highScoreList.length; i++) {
+				    t.setText(i+1, 0, "");
+					Integer score = highScoreList[i].getHighScore();
+					Integer time = 0;
+					Integer experience = highScoreList[i].getExperience();
+					Integer level = highScoreList[i].getLevel();
+					Integer wins = highScoreList[i].getWins();
+					Integer losses = highScoreList[i].getLosses();
+					
+					t.setText(i+1, 0, highScoreList[i].getName());
+					t.setText(i+1, 1, score.toString());
+					t.setText(i+1, 2, time.toString());
+					t.setText(i+1, 3, experience.toString());
+					t.setText(i+1, 4, level.toString());
+					t.setText(i+1, 5, wins.toString());
+					t.setText(i+1, 6, losses.toString());
+					
+				}
+			    
 			}
-
-			
 		});
 	}
 }

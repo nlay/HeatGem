@@ -20,15 +20,17 @@ public class ProfileView extends Composite {
 	private NumberLabel<Integer> experienceLabel;
 
 	private String username;
+	private String email;
 	private int level;
 	private int exp;
 	private int losses;
 	private int wins;
 
-	private UserProfile model;
 	private NumberLabel<Integer> lossesLabel;
 	private NumberLabel<Integer> winsLabel;
 	private Label nameProfileLabel;
+	private Label emailProfileLabel;
+	private UserProfile model;
 
 	/**
 	 * @param args
@@ -53,7 +55,7 @@ public class ProfileView extends Composite {
 		layoutPanel.setWidgetLeftWidth(btnNewButton_1, 262.0, Unit.PX, 81.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(btnNewButton_1, 371.0, Unit.PX, 30.0, Unit.PX);
 
-		Label lblProfileView = new Label("Profile View");
+		Label lblProfileView = new Label(username + "'s Profile");
 		layoutPanel.add(lblProfileView);
 		layoutPanel.setWidgetLeftWidth(lblProfileView, 244.0, Unit.PX, 99.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(lblProfileView, 23.0, Unit.PX, 18.0, Unit.PX);
@@ -63,59 +65,68 @@ public class ProfileView extends Composite {
 
 		UserFace.setAltText("you");
 		layoutPanel.add(UserFace);
-		layoutPanel.setWidgetLeftWidth(UserFace, 337.0, Unit.PX, 179.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(UserFace, 81.0, Unit.PX, 197.0, Unit.PX);
+		layoutPanel.setWidgetLeftWidth(UserFace, 340.0, Unit.PX, 179.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(UserFace, 80.0, Unit.PX, 197.0, Unit.PX);
 
 		Label lblName = new Label("Name");
 		layoutPanel.add(lblName);
 		layoutPanel.setWidgetLeftWidth(lblName, 20.0, Unit.PX, 56.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblName, 81.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(lblName, 80.0, Unit.PX, 18.0, Unit.PX);
+		
+		nameProfileLabel = new Label("NameHere");
+		layoutPanel.add(nameProfileLabel);
+		layoutPanel.setWidgetLeftWidth(nameProfileLabel, 105.0, Unit.PX, 131.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(nameProfileLabel, 80.0, Unit.PX, 18.0, Unit.PX);
 
+		Label lblEmail = new Label("Email");
+		layoutPanel.add(lblEmail);
+		layoutPanel.setWidgetLeftWidth(lblEmail, 20.0, Unit.PX, 56.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(lblEmail, 120.0, Unit.PX, 18.0, Unit.PX);
+
+		emailProfileLabel = new Label("EmailHere");
+		layoutPanel.add(emailProfileLabel);
+		layoutPanel.setWidgetLeftWidth(emailProfileLabel, 105.0, Unit.PX, 131.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(emailProfileLabel, 120.0, Unit.PX, 18.0, Unit.PX);
+		
 		Label lblLevel = new Label("Level");
 		layoutPanel.add(lblLevel);
 		layoutPanel.setWidgetLeftWidth(lblLevel, 20.0, Unit.PX, 56.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblLevel, 128.0, Unit.PX, 18.0, Unit.PX);
-
-		Label lblExperience = new Label("Experience");
-		layoutPanel.add(lblExperience);
-		layoutPanel.setWidgetLeftWidth(lblExperience, 17.0, Unit.PX, 70.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblExperience, 181.0, Unit.PX, 18.0, Unit.PX);
-
-		Label lblWins = new Label("Wins");
-		layoutPanel.add(lblWins);
-		layoutPanel.setWidgetLeftWidth(lblWins, 20.0, Unit.PX, 56.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblWins, 236.0, Unit.PX, 18.0, Unit.PX);
-
-		Label lblLosses = new Label("Losses");
-		layoutPanel.add(lblLosses);
-		layoutPanel.setWidgetLeftWidth(lblLosses, 20.0, Unit.PX, 56.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblLosses, 284.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(lblLevel, 160.0, Unit.PX, 18.0, Unit.PX);
 
 		numberLevelLabel = new NumberLabel<Integer>();
 		layoutPanel.add(numberLevelLabel);
 		layoutPanel.setWidgetLeftWidth(numberLevelLabel, 105.0, Unit.PX, 131.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(numberLevelLabel, 128.0, Unit.PX, 18.0, Unit.PX);
-
+		layoutPanel.setWidgetTopHeight(numberLevelLabel, 160.0, Unit.PX, 18.0, Unit.PX);
+		
+		Label lblExperience = new Label("Experience");
+		layoutPanel.add(lblExperience);
+		layoutPanel.setWidgetLeftWidth(lblExperience, 20.0, Unit.PX, 70.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(lblExperience, 200.0, Unit.PX, 18.0, Unit.PX);
+		
 		experienceLabel = new NumberLabel<Integer>();
 		layoutPanel.add(experienceLabel);
 		layoutPanel.setWidgetLeftWidth(experienceLabel, 105.0, Unit.PX, 131.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(experienceLabel, 181.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(experienceLabel, 200.0, Unit.PX, 18.0, Unit.PX);
 
-		nameProfileLabel = new Label("");
-		layoutPanel.add(nameProfileLabel);
-		layoutPanel.setWidgetLeftWidth(nameProfileLabel, 105.0, Unit.PX, 56.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(nameProfileLabel, 81.0, Unit.PX, 18.0, Unit.PX);
+		Label lblWins = new Label("Wins");
+		layoutPanel.add(lblWins);
+		layoutPanel.setWidgetLeftWidth(lblWins, 20.0, Unit.PX, 56.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(lblWins, 240.0, Unit.PX, 18.0, Unit.PX);
 
 		winsLabel = new NumberLabel<Integer>();
 		layoutPanel.add(winsLabel);
 		layoutPanel.setWidgetLeftWidth(winsLabel, 105.0, Unit.PX, 131.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(winsLabel, 236.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(winsLabel, 240.0, Unit.PX, 18.0, Unit.PX);
+		
+		Label lblLosses = new Label("Losses");
+		layoutPanel.add(lblLosses);
+		layoutPanel.setWidgetLeftWidth(lblLosses, 20.0, Unit.PX, 56.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(lblLosses, 280.0, Unit.PX, 18.0, Unit.PX);
 
 		lossesLabel = new NumberLabel<Integer>();
 		layoutPanel.add(lossesLabel);
 		layoutPanel.setWidgetLeftWidth(lossesLabel, 105.0, Unit.PX, 131.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lossesLabel, 284.0, Unit.PX, 18.0, Unit.PX);
-
+		layoutPanel.setWidgetTopHeight(lossesLabel, 280.0, Unit.PX, 18.0, Unit.PX);
 
 	}
 
@@ -137,6 +148,10 @@ public class ProfileView extends Composite {
 	
 	public void setWins(int wins) {
 		this.wins = wins;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public void deleteUser(final String username) {
@@ -182,6 +197,7 @@ public class ProfileView extends Composite {
 	protected void update() {
 		// Use values in model object to update UI components
 		nameProfileLabel.setText(username);
+		emailProfileLabel.setText(email);
 		numberLevelLabel.setValue(level);
 		experienceLabel.setValue(exp);
 		lossesLabel.setValue(losses);

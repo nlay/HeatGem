@@ -17,8 +17,8 @@ public interface IDatabase {
 	 */
 	public User logIn(String username, String password) throws SQLException;
 	
-	public void addUser(String username, String password, String confirmPassword,
-			String email);
+	public boolean addUser(String username, String password, String confirmPassword,
+			String email) throws SQLException;
 	
 	public UserProfile getUserProfile(String username);
 	
@@ -31,7 +31,5 @@ public interface IDatabase {
 	public boolean deleteUser(String username);
 
 	public UserProfile[] updateLeaderboard() throws SQLException;
-
-//	public boolean uniqueUser(String username);
 
 }

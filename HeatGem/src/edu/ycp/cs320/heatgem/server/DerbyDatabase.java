@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import edu.ycp.cs320.heatgem.shared.User;
 import edu.ycp.cs320.heatgem.shared.UserProfile;
 import edu.ycp.cs320.heatgem.server.DB;
@@ -146,11 +148,10 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	@Override
-	public void addUser(final String username, final String password,
-			final String confirmPassword, final String email) {
+	public boolean addUser(final String username, final String password,
+			final String confirmPassword, final String email) throws SQLException {
 
-		try {
-			databaseRun(new ITransaction<Boolean>() {
+		return  databaseRun(new ITransaction<Boolean>() {
 				@Override
 				public Boolean run(Connection conn) throws SQLException {
 					PreparedStatement stmt = null;
@@ -163,21 +164,33 @@ public class DerbyDatabase implements IDatabase {
 						resultSet = stmt.executeQuery();
 						
 						if (!resultSet.next()) {
-							// no such user
-							System.out.println("Unique user, add to DB!");
-							stmt2 = conn.prepareStatement(
-									"insert into users(username, password, highscore, email, exp, level, losses, wins) " +
-									"values (?, ?, 0, ?, 0, 1, 0, 0)"
-							);
-
-							stmt2.setString(1, username);
-							stmt2.setString(2, password);
-							stmt2.setString(3, email);
-							stmt2.executeUpdate();
-
-							return true;
+							//no such user
+							stmt = conn.prepareStatement("select * from users where email = ?");
+							stmt.setString(1, email);
+							resultSet = stmt.executeQuery();
+							
+							if (!resultSet.next()) {
+								// no such user OR email
+								System.out.println("Unique user, add to DB!");
+								stmt2 = conn.prepareStatement(
+										"insert into users(username, password, highscore, email, exp, level, losses, wins) " +
+										"values (?, ?, 0, ?, 0, 1, 0, 0)"
+								);
+	
+								stmt2.setString(1, username);
+								stmt2.setString(2, password);
+								stmt2.setString(3, email);
+								stmt2.executeUpdate();
+	
+								return true;
+							} else {
+								System.out.println("Email already exists!");
+								
+								return false;
+							}
+						
 						} else {
-							System.out.println("User already exists!");
+							System.out.println("Username already exists!");
 
 							return false;
 						}
@@ -188,9 +201,6 @@ public class DerbyDatabase implements IDatabase {
 					}
 				}
 			});
-		} catch (SQLException e) {
-			throw new RuntimeException("SQLException adding user", e);
-		}
 	}
 
 	@Override
@@ -388,17 +398,16 @@ public class DerbyDatabase implements IDatabase {
 			public UserProfile[] run(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
-				UserProfile temp = new UserProfile();
 				
 				try {
-					//UserProfile[] results = new UserProfile[10];
-					UserProfile[] results = {null,null,null,null,null,null,null,null,null,null};
+					ArrayList<UserProfile> results = new ArrayList<UserProfile>();
 					stmt = conn.prepareStatement("select * from users");
 					resultSet = stmt.executeQuery();
 					
 					int count = 0;
 					
 					while(resultSet.next()) {
+						UserProfile temp = new UserProfile();
 						temp.setUserId(resultSet.getInt(1));
 						temp.setName(resultSet.getString(2));
 						temp.setHighScore(resultSet.getInt(4));
@@ -407,20 +416,13 @@ public class DerbyDatabase implements IDatabase {
 						temp.setLevel(resultSet.getInt(7));
 						temp.setLosses(resultSet.getInt(8));
 						temp.setWins(resultSet.getInt(9));
-						System.out.println("  Temp is " + temp.getName());
 						
-						results[count] = temp;
-						System.out.println("Result is " + results[count].getName());
+						results.add(temp);
 						
-						//System.out.println("Count before increment is " + count);
 						count++;
-						//System.out.println(" Count after increment is " + count);
 					}
-
-					System.out.println(" Final is " + results[0].getName());
-					System.out.println(" Final is " + results[1].getName());
 					
-					return results;
+					return results.toArray(new UserProfile[results.size()]);
 				} finally {
 					DB.closeQuietly(stmt);
 					DB.closeQuietly(resultSet);
