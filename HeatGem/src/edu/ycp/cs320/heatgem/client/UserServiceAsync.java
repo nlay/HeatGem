@@ -10,7 +10,7 @@ public interface UserServiceAsync {
 	void logIn(String username, String password, AsyncCallback<User> callback);
 
 	void addUser(String username, String password, String confirmPassword,
-			String email, AsyncCallback<Void> callback);
+			String email, AsyncCallback<Boolean> callback);
 
 	void deleteUserAccount(String username, AsyncCallback<Boolean> asyncCallback);
 
@@ -22,6 +22,8 @@ public interface UserServiceAsync {
 
 	void updateUserProfile(String username, UserProfile updatedProfile,
 			AsyncCallback<Boolean> callback);
+
+	void updateLeaderboard(AsyncCallback<UserProfile[]> asyncCallback);
 
 //	void uniqueUser(String username, AsyncCallback<Boolean> asyncCallback);
 	

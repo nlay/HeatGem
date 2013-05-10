@@ -40,11 +40,7 @@ public class HeatGem implements EntryPoint {
 		"Homepage.gif",
 		"Homepage.png",
 		"HomepageDif.gif",
-		"Play.png", 
-		"PlaySelected.png",
-		"Candle.gif",
-		"black_box.png",
-		"placeholder.png"
+		"Play.png", "PlaySelected.png",
 //		"Layer1.png", "Layer2.png", "Layer3.png", "Layer4.png", "Layer5.png", "Layer6.png", "Layer7.png", "Layer8.png", "Layer9.png", "Layer10.png", "Layer11.png", "Layer12.png", "Layer13.png", "Layer14.png", "Layer15.png",
 	};
 	private static Map<String, Image> imageMap = new HashMap<String, Image>();

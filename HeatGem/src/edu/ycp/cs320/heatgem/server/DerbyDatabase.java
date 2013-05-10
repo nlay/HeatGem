@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import edu.ycp.cs320.heatgem.shared.User;
 import edu.ycp.cs320.heatgem.shared.UserProfile;
 import edu.ycp.cs320.heatgem.server.DB;
@@ -80,8 +83,6 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				
 				try {
-					// TODO: create a unique index on the username column
-					// to avoid having two users with the same username
 					stmt = conn.prepareStatement(
 							"create table users (" +
 							"  id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), " +
@@ -147,11 +148,10 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	@Override
-	public void addUser(final String username, final String password,
-			final String confirmPassword, final String email) {
+	public boolean addUser(final String username, final String password,
+			final String confirmPassword, final String email) throws SQLException {
 
-		try {
-			databaseRun(new ITransaction<Boolean>() {
+		return  databaseRun(new ITransaction<Boolean>() {
 				@Override
 				public Boolean run(Connection conn) throws SQLException {
 					PreparedStatement stmt = null;
@@ -164,52 +164,43 @@ public class DerbyDatabase implements IDatabase {
 						resultSet = stmt.executeQuery();
 						
 						if (!resultSet.next()) {
-							// no such user
-							System.out.println("Unique user, add to DB!");
-							stmt2 = conn.prepareStatement(
-									"insert into users(username, password, highscore, email, exp, level, losses, wins) " +
-									"values (?, ?, 0, ?, 0, 1, 0, 0)"
-							);
-
-							stmt2.setString(1, username);
-							stmt2.setString(2, password);
-							stmt2.setString(3, email);
-							stmt2.executeUpdate();
-
-							return true;
+							//no such user
+							stmt = conn.prepareStatement("select * from users where email = ?");
+							stmt.setString(1, email);
+							resultSet = stmt.executeQuery();
+							
+							if (!resultSet.next()) {
+								// no such user OR email
+								System.out.println("Unique user, add to DB!");
+								stmt2 = conn.prepareStatement(
+										"insert into users(username, password, highscore, email, exp, level, losses, wins) " +
+										"values (?, ?, 0, ?, 0, 1, 0, 0)"
+								);
+	
+								stmt2.setString(1, username);
+								stmt2.setString(2, password);
+								stmt2.setString(3, email);
+								stmt2.executeUpdate();
+	
+								return true;
+							} else {
+								System.out.println("Email already exists!");
+								
+								return false;
+							}
+						
 						} else {
-							System.out.println("User already exists!");
+							System.out.println("Username already exists!");
 
 							return false;
 						}
-						
-//						If you need to check for the existence of a user in a particular database before creating them, then you can do this:
-//
-//							USE your_db_name
-//
-//							IF NOT EXISTS
-//							    (SELECT name
-//							     FROM sys.database_principals
-//							     WHERE name = 'Bob')
-//							BEGIN
-//							    CREATE USER [Bob] 
-//							END
-//						
-						//or use this to check if there is a user using that username already
-//						IF NOT EXISTS (SELECT * FROM users WHERE username = @username)
-//					    INSERT INTO users (username) VALUES (@username);
-//					ELSE
-//					    RAISERROR 'whatever';
-						
-						//After an hour, I found out Derby apparently doesn't support IF or RAISERROR :sadface:
 					} finally {
 						DB.closeQuietly(stmt);
+						DB.closeQuietly(stmt2);
+						DB.closeQuietly(resultSet);
 					}
 				}
 			});
-		} catch (SQLException e) {
-			throw new RuntimeException("SQLException adding user", e);
-		}
 	}
 
 	@Override
@@ -269,12 +260,6 @@ public class DerbyDatabase implements IDatabase {
 					UserProfile result = null;
 					
 					try {
-//						UPDATE table_name
-//						SET column1=value, column2=value2,...
-//						WHERE some_column=some_value
-//						
-//						stmt = conn.prepareStatement("select * from users where username = ? and password = ?");
-						
 						stmt = conn.prepareStatement(
 								"UPDATE users " +
 								"SET column4=?, column6=?, column7=?, column8=?, column9=? " + 
@@ -312,15 +297,66 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	@Override
-	public UserProfile findUserProfileByUserId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserProfile findUserProfileByUserId(final int id) throws SQLException  {
+			return databaseRun(new ITransaction<UserProfile>() {
+				@Override
+				public UserProfile run(Connection conn) throws SQLException {
+					PreparedStatement stmt = null;
+					ResultSet resultSet = null;
+					UserProfile result = new UserProfile();
+					
+					try {
+						stmt = conn.prepareStatement("select * from users where id = ?");
+						stmt.setInt(1, id);
+						resultSet = stmt.executeQuery();
+						
+						if (!resultSet.next()) {
+							// no such user
+							return null;
+						}
+						
+						result.setUserId(resultSet.getInt(1));
+						result.setName(resultSet.getString(2));
+						result.setHighScore(resultSet.getInt(4));
+						result.setEmail(resultSet.getString(5));
+						result.setExperience(resultSet.getInt(6));
+						result.setLevel(resultSet.getInt(7));
+						result.setLosses(resultSet.getInt(8));
+						result.setWins(resultSet.getInt(9));
+						
+						return result;
+						
+					} finally {
+						DB.closeQuietly(stmt);
+						DB.closeQuietly(resultSet);
+					}
+				}
+			});
 	}
 
 	@Override
-	public int getAmountUsers() {
-		// TODO Auto-generated method stub
-		return 0;
+	public Integer getAmountUsers() throws SQLException {
+		return databaseRun(new ITransaction<Integer> () {
+			@Override
+			public Integer run(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				Integer number = 0;
+				
+				try {
+					stmt = conn.prepareStatement("select * from users");
+					resultSet = stmt.executeQuery();
+					
+					while(resultSet.next()) {
+						number++;
+					}
+				} finally {
+					DB.closeQuietly(stmt);
+					DB.closeQuietly(resultSet);
+				}
+				return number;
+			}
+		});
 	}
 
 	@Override
@@ -354,35 +390,45 @@ public class DerbyDatabase implements IDatabase {
 		return false;
 	}
 
-//	@Override
-//	public boolean uniqueUser(final String username) {
-//		// TODO Auto-generated method stub
-//		// pull information from database, compare with given name
-//		// return true if user does not exist
-//		
-//		try {
-//			databaseRun(new ITransaction<Boolean>() {
-//				@Override
-//				public Boolean run(Connection conn) throws SQLException {
-//					PreparedStatement stmt = null;
-//					
-//					try {
-//						stmt = conn.prepareStatement("select username from users where username = ?");
-//						stmt.setString(1, username);
-//						
-//						stmt.executeUpdate();
-//						
-//						return true;
-//					} finally {
-//						DB.closeQuietly(stmt);
-//					}
-//				}
-//			});
-//		} catch (SQLException e) {
-//			throw new RuntimeException("SQLException unique user", e);
-//		}
-//		
-//		return false;
-//	}
+	@Override
+	public UserProfile[] updateLeaderboard() throws SQLException {
+		// TODO Auto-generated method stub
+		return databaseRun(new ITransaction<UserProfile[]>() {
+			@Override
+			public UserProfile[] run(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					ArrayList<UserProfile> results = new ArrayList<UserProfile>();
+					stmt = conn.prepareStatement("select * from users");
+					resultSet = stmt.executeQuery();
+					
+					int count = 0;
+					
+					while(resultSet.next()) {
+						UserProfile temp = new UserProfile();
+						temp.setUserId(resultSet.getInt(1));
+						temp.setName(resultSet.getString(2));
+						temp.setHighScore(resultSet.getInt(4));
+						temp.setEmail(resultSet.getString(5));
+						temp.setExperience(resultSet.getInt(6));
+						temp.setLevel(resultSet.getInt(7));
+						temp.setLosses(resultSet.getInt(8));
+						temp.setWins(resultSet.getInt(9));
+						
+						results.add(temp);
+						
+						count++;
+					}
+					
+					return results.toArray(new UserProfile[results.size()]);
+				} finally {
+					DB.closeQuietly(stmt);
+					DB.closeQuietly(resultSet);
+				}
+			}
+		});
+	}
 	
 }

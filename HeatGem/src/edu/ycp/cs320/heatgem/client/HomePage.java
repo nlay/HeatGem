@@ -149,9 +149,8 @@ public class HomePage extends Composite {
 					profileView.setExp(user.getExperience());
 					profileView.setLosses(user.getLosses());
 					profileView.setWins(user.getWins());
+					profileView.setEmail(user.getEmail());
 					profileView.activate();
-				} else if (nextTabView instanceof HomeView) {
-					((HomeView)nextTabView).startScroll();
 				}
 			}
 		}

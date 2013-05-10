@@ -55,9 +55,8 @@ public class Game {
     public float currentTime = 0f;
     
     
-	public void timerTick(int count) {
+	public void timerTick() {
 		// Update stuff that needs to be updated
-		this.count = count;
 		count++;
 		currentTime +=1;
 		//Game Timer that increments by seconds

@@ -17,19 +17,19 @@ public interface IDatabase {
 	 */
 	public User logIn(String username, String password) throws SQLException;
 	
-	public void addUser(String username, String password, String confirmPassword,
-			String email);
+	public boolean addUser(String username, String password, String confirmPassword,
+			String email) throws SQLException;
 	
 	public UserProfile getUserProfile(String username);
 	
 	public boolean updateUserProfile(String username, UserProfile updatedProfile);
 
-	UserProfile findUserProfileByUserId(int id);
+	UserProfile findUserProfileByUserId(int id) throws SQLException;
 
-	int getAmountUsers();
+	Integer getAmountUsers() throws SQLException;
 
 	public boolean deleteUser(String username);
 
-//	public boolean uniqueUser(String username);
+	public UserProfile[] updateLeaderboard() throws SQLException;
 
 }
