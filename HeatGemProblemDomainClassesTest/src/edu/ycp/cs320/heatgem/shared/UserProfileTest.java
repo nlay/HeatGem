@@ -89,7 +89,7 @@ public class UserProfileTest {
 	}
 
 	@Test
-	public void setLevel() {
+	public void testSetLevel() {
 		assertEquals(this.level, 5);
 	}
 
