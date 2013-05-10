@@ -7,22 +7,26 @@ public class Player {
     
     public Player(String username)
     {
-        playerName = username;
-        health = 100;
-    }
-
-    public int getHealth()
-    {
-        return health;
-    }
-
-    public String getPlayerName()
-    {
-        return playerName;
+       playerName = username;
+       health =100;
+    	
     }
 
     public void setHealth(int health)
     {
         this.health = health;
     }
+    
+    public int getHealth()
+    {
+        return health;
+    }
+    
+    
+    public String getPlayerName()
+    {
+        return playerName;
+    }
+
+   
 }
