@@ -16,13 +16,11 @@ import com.google.gwt.event.dom.client.ClickEvent;
 public class ProfileView extends Composite {
 
 	private Image UserFace;
-	private NumberLabel<Integer> numberLevelLabel;
-	private NumberLabel<Integer> experienceLabel;
+	private NumberLabel<Integer> highScoreLabel;
 
 	private String username;
 	private String email;
-	private int level;
-	private int exp;
+	private int score;
 	private int losses;
 	private int wins;
 
@@ -88,45 +86,35 @@ public class ProfileView extends Composite {
 		layoutPanel.setWidgetLeftWidth(emailProfileLabel, 105.0, Unit.PX, 131.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(emailProfileLabel, 120.0, Unit.PX, 18.0, Unit.PX);
 		
-		Label lblLevel = new Label("Level");
-		layoutPanel.add(lblLevel);
-		layoutPanel.setWidgetLeftWidth(lblLevel, 20.0, Unit.PX, 56.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblLevel, 160.0, Unit.PX, 18.0, Unit.PX);
-
-		numberLevelLabel = new NumberLabel<Integer>();
-		layoutPanel.add(numberLevelLabel);
-		layoutPanel.setWidgetLeftWidth(numberLevelLabel, 105.0, Unit.PX, 131.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(numberLevelLabel, 160.0, Unit.PX, 18.0, Unit.PX);
-		
-		Label lblExperience = new Label("Experience");
+		Label lblExperience = new Label("HighScore");
 		layoutPanel.add(lblExperience);
 		layoutPanel.setWidgetLeftWidth(lblExperience, 20.0, Unit.PX, 70.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblExperience, 200.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(lblExperience, 160.0, Unit.PX, 18.0, Unit.PX);
 		
-		experienceLabel = new NumberLabel<Integer>();
-		layoutPanel.add(experienceLabel);
-		layoutPanel.setWidgetLeftWidth(experienceLabel, 105.0, Unit.PX, 131.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(experienceLabel, 200.0, Unit.PX, 18.0, Unit.PX);
+		highScoreLabel = new NumberLabel<Integer>();
+		layoutPanel.add(highScoreLabel);
+		layoutPanel.setWidgetLeftWidth(highScoreLabel, 105.0, Unit.PX, 131.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(highScoreLabel, 160.0, Unit.PX, 18.0, Unit.PX);
 
 		Label lblWins = new Label("Wins");
 		layoutPanel.add(lblWins);
 		layoutPanel.setWidgetLeftWidth(lblWins, 20.0, Unit.PX, 56.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblWins, 240.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(lblWins, 200.0, Unit.PX, 18.0, Unit.PX);
 
 		winsLabel = new NumberLabel<Integer>();
 		layoutPanel.add(winsLabel);
 		layoutPanel.setWidgetLeftWidth(winsLabel, 105.0, Unit.PX, 131.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(winsLabel, 240.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(winsLabel, 200.0, Unit.PX, 18.0, Unit.PX);
 		
 		Label lblLosses = new Label("Losses");
 		layoutPanel.add(lblLosses);
 		layoutPanel.setWidgetLeftWidth(lblLosses, 20.0, Unit.PX, 56.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblLosses, 280.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(lblLosses, 240.0, Unit.PX, 18.0, Unit.PX);
 
 		lossesLabel = new NumberLabel<Integer>();
 		layoutPanel.add(lossesLabel);
 		layoutPanel.setWidgetLeftWidth(lossesLabel, 105.0, Unit.PX, 131.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lossesLabel, 280.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(lossesLabel, 240.0, Unit.PX, 18.0, Unit.PX);
 
 	}
 
@@ -134,12 +122,8 @@ public class ProfileView extends Composite {
 		this.username = username;
 	}
 	
-	public void setExp(int exp) {
-		this.exp = exp;
-	}
-	
-	public void setLevel(int level) {
-		this.level = level;
+	public void setScore(int score) {
+		this.score = score;
 	}
 	
 	public void setLosses(int losses) {
@@ -198,8 +182,7 @@ public class ProfileView extends Composite {
 		// Use values in model object to update UI components
 		nameProfileLabel.setText(username);
 		emailProfileLabel.setText(email);
-		numberLevelLabel.setValue(level);
-		experienceLabel.setValue(exp);
+		highScoreLabel.setValue(score);
 		lossesLabel.setValue(losses);
 		winsLabel.setValue(wins);
 	}

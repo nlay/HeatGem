@@ -147,12 +147,13 @@ public class HomePage extends Composite {
 				} else if (nextTabView instanceof ProfileView) {
 					ProfileView profileView = (ProfileView) nextTabView;
 					profileView.setUsername(user.getUsername());
-					profileView.setLevel(user.getLevel());
-					profileView.setExp(user.getExperience());
+					profileView.setScore(user.getHighScore());
 					profileView.setLosses(user.getLosses());
 					profileView.setWins(user.getWins());
 					profileView.setEmail(user.getEmail());
 					profileView.activate();
+				} else if (nextTabView instanceof HomeView) {
+					((HomeView)nextTabView).startScroll();
 				}
 			}
 		}

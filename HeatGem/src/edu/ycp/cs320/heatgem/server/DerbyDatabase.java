@@ -91,8 +91,8 @@ public class DerbyDatabase implements IDatabase {
 							"  password VARCHAR(50) NOT NULL, " +
 							"  highscore INT, " + 
 							"  email VARCHAR(50) NOT NULL, " + 
-							"  exp INT, " + 
-							"  level INT NOT NULL, " + 
+							"  exp INT, " +				//unused
+							"  level INT NOT NULL, " +	//unused
 							"  losses INT, " + 
 							"  wins INT " +
 							")"
