@@ -62,7 +62,7 @@ public class GameUI extends Composite {
 	private Score score;
 	private int HealthMove, HealthMove2, PrevHealth = 100, PrevHealth2 = 100;
 
-	//NICK: profile update things
+	// profile update things
 	private String username;
 	private UserProfile model;
 	private int wins;
@@ -110,19 +110,16 @@ public class GameUI extends Composite {
 						}
 					} else { // Get Score
 						PScore = (int) score.getScore(TotalTime,  player1);
-						//NICK: Update user's score
+						// Update user's score
 						model.setWins(wins);
 						model.setLosses(losses);
 						
 						int previousHighScore = model.getHighScore();
 						if (previousHighScore < PScore) {
 							model.setHighScore(PScore);
-						} else {
-							
-						}
-						
-						
+						} else { }
 						//work-around to make timer NOT endlessly increment data in database
+						//but it does still endlessly send the correct data
 						if (victoryBool == true) {
 							wins--;
 						} else if (victoryBool == false) {
@@ -130,7 +127,6 @@ public class GameUI extends Composite {
 						}
 						
 						updateScore();
-						GWT.log("Updated player's score");
 					}
 				}
 				else { 
