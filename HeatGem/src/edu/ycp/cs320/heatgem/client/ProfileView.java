@@ -3,6 +3,7 @@ package edu.ycp.cs320.heatgem.client;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.LayoutPanel;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
@@ -50,7 +51,7 @@ public class ProfileView extends Composite {
 			}
 		});
 		layoutPanel.add(btnNewButton_1);
-		layoutPanel.setWidgetLeftWidth(btnNewButton_1, 262.0, Unit.PX, 81.0, Unit.PX);
+		layoutPanel.setWidgetLeftWidth(btnNewButton_1, 639.0, Unit.PX, 122.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(btnNewButton_1, 371.0, Unit.PX, 30.0, Unit.PX);
 
 		Label lblProfileView = new Label("Profile Page");
@@ -63,7 +64,7 @@ public class ProfileView extends Composite {
 
 		UserFace.setAltText("you");
 		layoutPanel.add(UserFace);
-		layoutPanel.setWidgetLeftWidth(UserFace, 340.0, Unit.PX, 179.0, Unit.PX);
+		layoutPanel.setWidgetLeftWidth(UserFace, 600.0, Unit.PX, 179.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(UserFace, 80.0, Unit.PX, 197.0, Unit.PX);
 
 		Label lblName = new Label("Name");
@@ -73,7 +74,7 @@ public class ProfileView extends Composite {
 		
 		nameProfileLabel = new Label("NameHere");
 		layoutPanel.add(nameProfileLabel);
-		layoutPanel.setWidgetLeftWidth(nameProfileLabel, 105.0, Unit.PX, 131.0, Unit.PX);
+		layoutPanel.setWidgetLeftWidth(nameProfileLabel, 105.0, Unit.PX, 260.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(nameProfileLabel, 80.0, Unit.PX, 18.0, Unit.PX);
 
 		Label lblEmail = new Label("Email");
@@ -83,7 +84,7 @@ public class ProfileView extends Composite {
 
 		emailProfileLabel = new Label("EmailHere");
 		layoutPanel.add(emailProfileLabel);
-		layoutPanel.setWidgetLeftWidth(emailProfileLabel, 105.0, Unit.PX, 131.0, Unit.PX);
+		layoutPanel.setWidgetLeftWidth(emailProfileLabel, 105.0, Unit.PX, 260.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(emailProfileLabel, 120.0, Unit.PX, 18.0, Unit.PX);
 		
 		Label lblExperience = new Label("HighScore");
@@ -115,7 +116,6 @@ public class ProfileView extends Composite {
 		layoutPanel.add(lossesLabel);
 		layoutPanel.setWidgetLeftWidth(lossesLabel, 105.0, Unit.PX, 131.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(lossesLabel, 240.0, Unit.PX, 18.0, Unit.PX);
-
 	}
 
 	public void setUsername(String username) {
