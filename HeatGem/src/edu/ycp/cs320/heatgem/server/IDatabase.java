@@ -22,7 +22,7 @@ public interface IDatabase {
 	
 	public UserProfile getUserProfile(String username);
 	
-	public boolean updateUserProfile(String username, UserProfile updatedProfile);
+	public boolean updateUserProfile(String username, UserProfile updatedProfile) throws SQLException;
 
 	UserProfile findUserProfileByUserId(int id) throws SQLException;
 

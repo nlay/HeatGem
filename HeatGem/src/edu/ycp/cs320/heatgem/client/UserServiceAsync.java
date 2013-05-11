@@ -25,8 +25,4 @@ public interface UserServiceAsync {
 
 	void updateLeaderboard(AsyncCallback<UserProfile[]> asyncCallback);
 
-//	void uniqueUser(String username, AsyncCallback<Boolean> asyncCallback);
-	
-	//void updateBoard();
-
 }

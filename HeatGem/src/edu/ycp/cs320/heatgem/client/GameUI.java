@@ -62,11 +62,15 @@ public class GameUI extends Composite {
 	private Score score;
 	private int HealthMove, HealthMove2, PrevHealth = 100, PrevHealth2 = 100;
 
-	//NICK: profile retrieval things
+	//NICK: profile update things
 	private String username;
-	private UserProfile profile;
+	private UserProfile model;
+	private int wins;
+	private int losses;
+	private boolean victoryBool;
 
 	public GameUI() {
+		activate();
 
 		// FocusPanel
 		final FocusPanel panel = new FocusPanel();
@@ -106,16 +110,27 @@ public class GameUI extends Composite {
 						}
 					} else { // Get Score
 						PScore = (int) score.getScore(TotalTime,  player1);
-						//timer.cancel();
-						/*
-						//QUESTION
-						//NICK: update database with new score, testing values now, don't work :(
-						//I think it's because the timer is still going, maybe not 
-						profile.setLosses(1);
+						//NICK: Update user's score
+						model.setWins(wins);
+						model.setLosses(losses);
+						
+						int previousHighScore = model.getHighScore();
+						if (previousHighScore < PScore) {
+							model.setHighScore(PScore);
+						} else {
+							
+						}
+						
+						
+						//work-around to make timer NOT endlessly increment data in database
+						if (victoryBool == true) {
+							wins--;
+						} else if (victoryBool == false) {
+							losses--;
+						}
+						
 						updateScore();
-						GWT.log("updated score perhaps");
-						timer.cancel();
-						 */
+						GWT.log("Updated player's score");
 					}
 				}
 				else { 
@@ -229,10 +244,43 @@ public class GameUI extends Composite {
 	// }
 	
 
+	public void setUsername(String username) {
+		//NICK
+		this.username = username;
+	}
+	
+	public void setWins(int wins) {
+		//NICK
+		this.wins = wins;
+	}
+	
+	public void setLosses(int losses) {
+		//NICK
+		this.losses = losses;
+	}
+
+	public void activate() {
+		//NICK
+		RPC.userService.getUserProfile(username, new AsyncCallback <UserProfile>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// show error message
+				System.out.println("Could not communicate with server?");
+			}
+
+			@Override
+			public void onSuccess(UserProfile result) {
+					model = result;
+			}
+		});
+
+	}
+
 
 	protected void updateScore() {
-		//NICK
-		RPC.userService.updateUserProfile(username, profile, new AsyncCallback<Boolean>() {
+		
+		RPC.userService.updateUserProfile(username, model, new AsyncCallback<Boolean>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -243,35 +291,11 @@ public class GameUI extends Composite {
 			@Override
 			public void onSuccess(Boolean result) {
 				// TODO Auto-generated method stub
-				System.out.println("Score sent to database!");
 			}
 			
 			
 		});
 		
-	}
-
-	public void setusername(String username) {
-		//NICK
-		this.username = username;
-	}
-
-	public void setProfile(String username) {
-		//NICK
-		RPC.userService.getUserProfile(username, new AsyncCallback <UserProfile>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// show error message
-				System.out.println("GameUI-getUserProfile Error");
-			}
-
-			@Override
-			public void onSuccess(UserProfile result) {
-					profile = result;
-			}
-		});
-
 	}
 
 	protected void Draw() {
@@ -385,6 +409,10 @@ public class GameUI extends Composite {
 				// Draw Sprite for character
 				bufCtx.drawImage((ImageElement) Defeat.getElement().cast(), 50,
 						200);
+				
+				// Update global win/lose values
+				victoryBool = false;
+				losses++;
 
 			} else {
 				// Draw win image
@@ -398,6 +426,10 @@ public class GameUI extends Composite {
 				// Draw Sprite for character
 				bufCtx.drawImage((ImageElement) Victory.getElement().cast(),
 						50, 200);
+				
+				// Update global win/lose values
+				victoryBool = true;
+				wins++;
 			}
 		}
 		// Copy buffer onto main canvas

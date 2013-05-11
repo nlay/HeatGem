@@ -48,7 +48,13 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 	
 	@Override
 	public Boolean updateUserProfile(String username, UserProfile updatedProfile) {
-		return DB.instance().updateUserProfile(username, updatedProfile);
+		try {
+			return DB.instance().updateUserProfile(username, updatedProfile);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
@@ -92,11 +98,6 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 		return null;
 		
 	}
-
-//	@Override
-//	public Boolean uniqueUser(String username) {
-//		// TODO Auto-generated method stub
-//		return DB.instance().uniqueUser(username);
-//	}
+	
 }
 

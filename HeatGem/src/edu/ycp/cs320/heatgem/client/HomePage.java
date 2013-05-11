@@ -139,8 +139,10 @@ public class HomePage extends Composite {
 
 				if (nextTabView instanceof GameUI) {
 					GameUI gameUI = (GameUI) nextTabView;
-					gameUI.setusername(user.getUsername());
-					gameUI.setProfile(user.getUsername());
+					gameUI.setUsername(user.getUsername());
+					gameUI.setWins(user.getWins());
+					gameUI.setLosses(user.getLosses());
+					gameUI.activate();
 					gameUI.startGame();
 				} else if (nextTabView instanceof ProfileView) {
 					ProfileView profileView = (ProfileView) nextTabView;

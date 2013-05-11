@@ -55,7 +55,7 @@ public class ProfileView extends Composite {
 		layoutPanel.setWidgetLeftWidth(btnNewButton_1, 262.0, Unit.PX, 81.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(btnNewButton_1, 371.0, Unit.PX, 30.0, Unit.PX);
 
-		Label lblProfileView = new Label(username + "'s Profile");
+		Label lblProfileView = new Label("Profile Page");
 		layoutPanel.add(lblProfileView);
 		layoutPanel.setWidgetLeftWidth(lblProfileView, 244.0, Unit.PX, 99.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(lblProfileView, 23.0, Unit.PX, 18.0, Unit.PX);
@@ -202,6 +202,5 @@ public class ProfileView extends Composite {
 		experienceLabel.setValue(exp);
 		lossesLabel.setValue(losses);
 		winsLabel.setValue(wins);
-
 	}
 }

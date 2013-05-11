@@ -76,6 +76,21 @@ public class LeaderBoard extends Composite {
 				highScoreList = result;
 				
 				//TODO: Sort here by score before setting labels
+				for (int j = 0; j < highScoreList.length; j++) {
+					for (int i = 0; i < highScoreList.length-1; i++) {
+						
+						int score1 = highScoreList[i].getHighScore();
+						int score2 = highScoreList[i+1].getHighScore();
+						//System.out.println("Pass " + j + ", " + i + ", score1 = " + score1 + ", score2 = " + score2);
+						if (score1 < score2) {
+							UserProfile temp = new UserProfile();
+							temp = highScoreList[i];
+							highScoreList[i] = highScoreList[i+1];
+							highScoreList[i+1] = temp;
+						}
+						
+					}
+				}
 				
 				for (int i = 0; i < highScoreList.length; i++) {
 				    t.setText(i+1, 0, "");

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import edu.ycp.cs320.heatgem.shared.User;
 import edu.ycp.cs320.heatgem.shared.UserProfile;
@@ -206,63 +207,61 @@ public class DerbyDatabase implements IDatabase {
 	@Override
 	public UserProfile getUserProfile(final String username) {
 		// TODO Auto-generated method stub
-		try {
-			databaseRun(new ITransaction<UserProfile>() {
-				@Override
-				public UserProfile run(Connection conn) throws SQLException {
-					PreparedStatement stmt = null;
-					ResultSet resultSet = null;
-					UserProfile result = new UserProfile();
-					
-					try {
-						stmt = conn.prepareStatement("select * from users where username = ?");
-						stmt.setString(1, username);
-						resultSet = stmt.executeQuery();
+			try {
+				return databaseRun(new ITransaction<UserProfile>() {
+					@Override
+					public UserProfile run(Connection conn) throws SQLException {
+						PreparedStatement stmt = null;
+						ResultSet resultSet = null;
+						UserProfile result = new UserProfile();
 						
-						if (!resultSet.next()) {
-							// no such user
-							return null;
+						try {
+							stmt = conn.prepareStatement("select * from users where username = ?");
+							stmt.setString(1, username);
+							resultSet = stmt.executeQuery();
+							
+							if (!resultSet.next()) {
+								// no such user
+								return null;
+							}
+							
+							result.setUserId(resultSet.getInt(1));
+							result.setName(resultSet.getString(2));
+							result.setHighScore(resultSet.getInt(4));
+							result.setEmail(resultSet.getString(5));
+							result.setExperience(resultSet.getInt(6));
+							result.setLevel(resultSet.getInt(7));
+							result.setLosses(resultSet.getInt(8));
+							result.setWins(resultSet.getInt(9));
+							
+							return result;
+							
+						} finally {
+							DB.closeQuietly(stmt);
+							DB.closeQuietly(resultSet);
 						}
-						
-						result.setUserId(resultSet.getInt(1));
-						result.setName(resultSet.getString(2));
-						result.setHighScore(resultSet.getInt(4));
-						result.setEmail(resultSet.getString(5));
-						result.setExperience(resultSet.getInt(6));
-						result.setLevel(resultSet.getInt(7));
-						result.setLosses(resultSet.getInt(8));
-						result.setWins(resultSet.getInt(9));
-						
-						return result;
-						
-					} finally {
-						DB.closeQuietly(stmt);
-						DB.closeQuietly(resultSet);
 					}
-				}
-			});
-		} catch (SQLException e) {
-			throw new RuntimeException("SQLException getting UserProfile", e);
-		}
-		return null;
+				});
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
 	}
 
 	@Override
-	public boolean updateUserProfile(final String username, final UserProfile updatedProfile) {
+	public boolean updateUserProfile(final String username, final UserProfile updatedProfile) throws SQLException {
 		// TODO Auto-generated method stub
 		
-		try {
-			databaseRun(new ITransaction<UserProfile>() {
+		return databaseRun(new ITransaction<Boolean>() {
 				@Override
-				public UserProfile run(Connection conn) throws SQLException {
+				public Boolean run(Connection conn) throws SQLException {
 					PreparedStatement stmt = null;
-					ResultSet resultSet = null;
-					UserProfile result = null;
 					
 					try {
 						stmt = conn.prepareStatement(
 								"UPDATE users " +
-								"SET column4=?, column6=?, column7=?, column8=?, column9=? " + 
+								"SET highscore=?, exp=?, level=?, losses=?, wins=? " + 
 								"WHERE username = ?"
 						);
 						
@@ -272,28 +271,15 @@ public class DerbyDatabase implements IDatabase {
 						stmt.setInt(4, updatedProfile.getLosses());
 						stmt.setInt(5, updatedProfile.getWins());
 						stmt.setString(6, username);
+						stmt.executeUpdate();
 						
-						resultSet = stmt.executeQuery();
-						
-						if (!resultSet.next()) {
-							// no such user
-							return null;
-						}
-						
-						result = updatedProfile;
+						return true;
 						
 					} finally {
 						DB.closeQuietly(stmt);
-						DB.closeQuietly(resultSet);
 					}
-					return result;
 				}
 			});
-		} catch (SQLException e) {
-			throw new RuntimeException("SQLException getting UserProfile", e);
-		}
-		
-		return false;
 	}
 
 	@Override
@@ -403,9 +389,7 @@ public class DerbyDatabase implements IDatabase {
 					ArrayList<UserProfile> results = new ArrayList<UserProfile>();
 					stmt = conn.prepareStatement("select * from users");
 					resultSet = stmt.executeQuery();
-					
-					int count = 0;
-					
+										
 					while(resultSet.next()) {
 						UserProfile temp = new UserProfile();
 						temp.setUserId(resultSet.getInt(1));
@@ -418,8 +402,6 @@ public class DerbyDatabase implements IDatabase {
 						temp.setWins(resultSet.getInt(9));
 						
 						results.add(temp);
-						
-						count++;
 					}
 					
 					return results.toArray(new UserProfile[results.size()]);
@@ -430,5 +412,4 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
 }
