@@ -30,6 +30,12 @@ public class ProfileView extends Composite {
 	private Label nameProfileLabel;
 	private Label emailProfileLabel;
 	private UserProfile model;
+	
+	private Image namepic;
+	private Image emailpic;
+	private Image scorepic;
+	private Image winspic;
+	private Image lossespic;
 
 	/**
 	 * @param args
@@ -54,11 +60,6 @@ public class ProfileView extends Composite {
 		layoutPanel.setWidgetLeftWidth(btnNewButton_1, 639.0, Unit.PX, 122.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(btnNewButton_1, 371.0, Unit.PX, 30.0, Unit.PX);
 
-		Label lblProfileView = new Label("Profile Page");
-		layoutPanel.add(lblProfileView);
-		layoutPanel.setWidgetLeftWidth(lblProfileView, 244.0, Unit.PX, 99.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblProfileView, 23.0, Unit.PX, 18.0, Unit.PX);
-
 		//Image image = new Image("Defeat.png");
 		UserFace = HeatGem.getImage("Defeat.png");
 
@@ -67,55 +68,66 @@ public class ProfileView extends Composite {
 		layoutPanel.setWidgetLeftWidth(UserFace, 600.0, Unit.PX, 179.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(UserFace, 80.0, Unit.PX, 197.0, Unit.PX);
 
-		Label lblName = new Label("Name");
-		layoutPanel.add(lblName);
-		layoutPanel.setWidgetLeftWidth(lblName, 20.0, Unit.PX, 56.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblName, 80.0, Unit.PX, 18.0, Unit.PX);
-		
 		nameProfileLabel = new Label("NameHere");
+		nameProfileLabel.setStyleName("gwt-Label-name");
 		layoutPanel.add(nameProfileLabel);
-		layoutPanel.setWidgetLeftWidth(nameProfileLabel, 105.0, Unit.PX, 260.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(nameProfileLabel, 80.0, Unit.PX, 18.0, Unit.PX);
-
-		Label lblEmail = new Label("Email");
-		layoutPanel.add(lblEmail);
-		layoutPanel.setWidgetLeftWidth(lblEmail, 20.0, Unit.PX, 56.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblEmail, 120.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetLeftWidth(nameProfileLabel, 201.0, Unit.PX, 131.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(nameProfileLabel, 47.0, Unit.PX, 30.0, Unit.PX);
 
 		emailProfileLabel = new Label("EmailHere");
+		emailProfileLabel.setStyleName("gwt-Label-name");
 		layoutPanel.add(emailProfileLabel);
-		layoutPanel.setWidgetLeftWidth(emailProfileLabel, 105.0, Unit.PX, 260.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(emailProfileLabel, 120.0, Unit.PX, 18.0, Unit.PX);
-		
-		Label lblExperience = new Label("HighScore");
-		layoutPanel.add(lblExperience);
-		layoutPanel.setWidgetLeftWidth(lblExperience, 20.0, Unit.PX, 70.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblExperience, 160.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetLeftWidth(emailProfileLabel, 201.0, Unit.PX, 131.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(emailProfileLabel, 124.0, Unit.PX, 30.0, Unit.PX);
 		
 		highScoreLabel = new NumberLabel<Integer>();
+		highScoreLabel.setStyleName("gwt-Label-name");
 		layoutPanel.add(highScoreLabel);
-		layoutPanel.setWidgetLeftWidth(highScoreLabel, 105.0, Unit.PX, 131.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(highScoreLabel, 160.0, Unit.PX, 18.0, Unit.PX);
-
-		Label lblWins = new Label("Wins");
-		layoutPanel.add(lblWins);
-		layoutPanel.setWidgetLeftWidth(lblWins, 20.0, Unit.PX, 56.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblWins, 200.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetLeftWidth(highScoreLabel, 201.0, Unit.PX, 131.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(highScoreLabel, 204.0, Unit.PX, 30.0, Unit.PX);
 
 		winsLabel = new NumberLabel<Integer>();
+		winsLabel.setStyleName("gwt-Label-name");
 		layoutPanel.add(winsLabel);
-		layoutPanel.setWidgetLeftWidth(winsLabel, 105.0, Unit.PX, 131.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(winsLabel, 200.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetLeftWidth(winsLabel, 201.0, Unit.PX, 131.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(winsLabel, 274.0, Unit.PX, 30.0, Unit.PX);
 		
-		Label lblLosses = new Label("Losses");
-		layoutPanel.add(lblLosses);
-		layoutPanel.setWidgetLeftWidth(lblLosses, 20.0, Unit.PX, 56.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lblLosses, 240.0, Unit.PX, 18.0, Unit.PX);
-
 		lossesLabel = new NumberLabel<Integer>();
+		lossesLabel.setStyleName("gwt-Label-name");
 		layoutPanel.add(lossesLabel);
-		layoutPanel.setWidgetLeftWidth(lossesLabel, 105.0, Unit.PX, 131.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(lossesLabel, 240.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetLeftWidth(lossesLabel, 201.0, Unit.PX, 131.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(lossesLabel, 351.0, Unit.PX, 30.0, Unit.PX);
+		
+		namepic = new Image();
+		layoutPanel.add(namepic);
+		layoutPanel.setWidgetLeftWidth(namepic, 24.0, Unit.PX, 160.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(namepic, 35.0, Unit.PX, 60.0, Unit.PX);
+		namepic.setUrl(GWT.getModuleBaseForStaticFiles() + "name.png");
+
+		emailpic = new Image();
+		layoutPanel.add(emailpic);
+		layoutPanel.setWidgetLeftWidth(emailpic, 24.0, Unit.PX, 160.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(emailpic, 110.0, Unit.PX, 60.0, Unit.PX);
+		emailpic.setUrl(GWT.getModuleBaseForStaticFiles() + "email.png");
+
+		scorepic = new Image();
+		layoutPanel.add(scorepic);
+		layoutPanel.setWidgetLeftWidth(scorepic, 24.0, Unit.PX, 160.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(scorepic, 185.0, Unit.PX, 60.0, Unit.PX);
+		scorepic.setUrl(GWT.getModuleBaseForStaticFiles() + "score.png");
+
+		winspic = new Image();
+		layoutPanel.add(winspic);
+		layoutPanel.setWidgetLeftWidth(winspic, 24.0, Unit.PX, 160.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(winspic, 260.0, Unit.PX, 60.0, Unit.PX);
+		winspic.setUrl(GWT.getModuleBaseForStaticFiles() + "wins.png");
+
+		lossespic = new Image();
+		layoutPanel.add(lossespic);
+		layoutPanel.setWidgetLeftWidth(lossespic, 24.0, Unit.PX, 160.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(lossespic, 335.0, Unit.PX, 60.0, Unit.PX);
+		lossespic.setUrl(GWT.getModuleBaseForStaticFiles() + "losses.png");
+
 	}
 
 	public void setUsername(String username) {
