@@ -46,10 +46,13 @@ public class GameUI extends Composite {
 	private Image AttackSelected;
 	private Image Heal;
 	private Image HealSelected;
-	private Image Play, PlaySelected;
+	private Image BattleH, BattleHSel, BattleM, BattleMSel, BattleB, BattleBSel;
 	private Image Defeat;
 	private Image Victory;
 	private Image MediumHealth, LowHealth;
+	private Image BFull, BMed, BLow, BWin;
+	private Image MFull, MMed, MLow, MWin;
+	private Image HFull, HMed, HLow;
 	private Player player1;
 	private Player player2;
 	private Battle BattleState;
@@ -61,6 +64,7 @@ public class GameUI extends Composite {
 	private int PScore;
 	private Score score;
 	private int HealthMove, HealthMove2, PrevHealth = 100, PrevHealth2 = 100;
+	private int ChosenPlayer;
 
 	// profile update things
 	private String username;
@@ -150,8 +154,19 @@ public class GameUI extends Composite {
 			@Override
 			public void onMouseDown(MouseDownEvent event) {
 				if (gamestate == 0) { // Menu
-					if ((MouseX >= 300 && MouseX <= 500)
-							&& (MouseY >= 200 && MouseY <= 250)) {
+			        if ((MouseX >= 275 && MouseX <= 553)
+					            && (MouseY >= 150 && MouseY <= 177)) {
+					          ChosenPlayer = 1;
+					          gamestate = 1;
+			        }
+			        else if ((MouseX >= 275 && MouseX <= 556)
+			            && (MouseY >= 190 && MouseY <= 217)) {
+			          ChosenPlayer = 2;
+			          gamestate = 1;
+			        }
+			        else if ((MouseX >= 250 && MouseX <= 583)
+			            && (MouseY >= 230 && MouseY <= 266)) {
+			          ChosenPlayer = 3;
 						gamestate = 1;
 					}
 				} else {
@@ -215,10 +230,25 @@ public class GameUI extends Composite {
 		GameLoss = HeatGem.getImage("BattleLoss.jpg");
 		MediumHealth = HeatGem.getImage("YellowHealth.png");
 		LowHealth = HeatGem.getImage("LowHealth.png");
-		HomePage = HeatGem.getImage("Homepage.png");
-		//HomePage = HeatGem.getImage("HomePageDif.gif");
-		Play = HeatGem.getImage("Play.png");
-		PlaySelected = HeatGem.getImage("PlaySelected.png");
+		HomePage = HeatGem.getImage("HomepageDif.gif");
+		BattleH = HeatGem.getImage("Hovemeyer.png");
+		BattleHSel = HeatGem.getImage("HovemeyerSelected.png");
+		BattleM = HeatGem.getImage("Moscola.png");
+		BattleMSel = HeatGem.getImage("MoscolaSelected.png");
+		BattleB = HeatGem.getImage("Babcock.png");
+		BattleBSel = HeatGem.getImage("BabcockSelected.png");
+		BFull = HeatGem.getImage("BabcockFull.png");
+		BMed = HeatGem.getImage("BabcockMedium.png");
+		BLow = HeatGem.getImage("BabcockHurt.png");
+		BWin = HeatGem.getImage("BabcockWin.png");
+		MFull = HeatGem.getImage("MoscolaFull.png");
+		MMed = HeatGem.getImage("MoscolaMedium.png");
+		MLow = HeatGem.getImage("MoscolaLow.png");
+		MWin = HeatGem.getImage("MoscolaWin.png");
+		HFull = HeatGem.getImage("HovemeyerFull.png");
+		HMed = HeatGem.getImage("HovemeyerMedium.png");
+		HLow = HeatGem.getImage("HovemeyerLow.png");
+
 
 		game = new Game();
 		player1 = new Player("Player");
@@ -226,6 +256,7 @@ public class GameUI extends Composite {
 		BattleState = new Battle(player1, player2);
 		score = new Score();
 		gamestate = 0;
+		ChosenPlayer = 0;
 		// Add a listener for mouse motion.
 		// Each time the mouse is moved, clicked, released, etc. the
 		// handleMouseMove method
@@ -301,14 +332,32 @@ public class GameUI extends Composite {
 		    for (int i = 1; i <= 15; i++){
 			      bufCtx.drawImage((ImageElement) HomePage.getElement().cast(), 0, 0);
 			}
-			if ((MouseX >= 300 && MouseX <= 500)
-					&& (MouseY >= 200 && MouseY <= 250)) {
-				bufCtx.drawImage((ImageElement) PlaySelected.getElement()
-						.cast(), 300, 200); // Draw play selected
-			} else {
-				bufCtx.drawImage((ImageElement) Play.getElement().cast(), 300,
-						200); // Draw play
-			}
+		          //PICK YOUR OPPONENT
+		            if ((MouseX >= 275 && MouseX <= 555)
+		                && (MouseY >= 150 && MouseY <= 177)) {
+		              bufCtx.drawImage((ImageElement) BattleBSel.getElement()
+		                  .cast(), 275, 150); // Draw play selected
+		            } else {
+		              bufCtx.drawImage((ImageElement) BattleB.getElement().cast(), 275,
+		                  150); // Draw play
+		            }
+		            if ((MouseX >= 275 && MouseX <= 546)
+		                && (MouseY >= 190 && MouseY <= 217)) {
+		              bufCtx.drawImage((ImageElement) BattleMSel.getElement()
+		                  .cast(), 275, 190); // Draw play selected
+		            } else {
+		              bufCtx.drawImage((ImageElement) BattleM.getElement().cast(), 275,
+		                  190); // Draw play
+		            }
+		            if ((MouseX >= 250 && MouseX <= 583)
+		                && (MouseY >= 230 && MouseY <= 266)) {
+		              bufCtx.drawImage((ImageElement) BattleHSel.getElement()
+		                  .cast(), 250, 230); // Draw play selected
+		            } else {
+		              bufCtx.drawImage((ImageElement) BattleH.getElement().cast(), 250,
+		                  230); // Draw play
+		            }
+		          
 
 		} else {
 			if (BattleState.battleState() == 0) {
@@ -337,21 +386,64 @@ public class GameUI extends Composite {
 				bufCtx.fillRect(30, 430, (double) player1Health * 3, 25);
 
 				int player2Health = player2.getHealth();
+				//FullHealth
 				if (player2Health > 50) {
 					bufCtx.setFillStyle("green");
 					// Draw Sprite for Enemy
-					bufCtx.drawImage((ImageElement) EnemyFace.getElement()
+					          
+					          ///
+					          /// B appreviation is Babcock, M for Moscola, and H for Hovemeyer
+					          ///
+					          
+					          if(ChosenPlayer == 1){ 
+					            bufCtx.drawImage((ImageElement) BFull.getElement()
 							.cast(), 580, 100);
+					          }
+					                    else if(ChosenPlayer == 2){
+					                      bufCtx.drawImage((ImageElement) MFull.getElement()
+					                          .cast(), 580, 100);
+					                      }
+					                    else if (ChosenPlayer == 3){
+					                      bufCtx.drawImage((ImageElement) HFull.getElement()
+					                          .cast(), 580, 100);
+					                    }
+					                    
+					                    
+					                    
+					                    //Medium Health
 				} else if (player2Health <= 50 && player2Health > 25) {
 					bufCtx.setFillStyle("yellow");
 					// Draw Sprite for Enemy
-					bufCtx.drawImage((ImageElement) MediumHealth.getElement()
+					if(ChosenPlayer == 1){
+						            bufCtx.drawImage((ImageElement) BMed.getElement()
 							.cast(), 580, 100);
+						                      }
+					          else if(ChosenPlayer == 2){
+					            bufCtx.drawImage((ImageElement) MMed.getElement()
+					                .cast(), 580, 100);
+					            }
+					          else if (ChosenPlayer == 3){
+					            bufCtx.drawImage((ImageElement) HMed.getElement()
+					                .cast(), 580, 100);
+					          }
+					          
+					          
+					          //Low Health
 				} else {
 					bufCtx.setFillStyle("red");
 					// Draw Sprite for Enemy
-					bufCtx.drawImage((ImageElement) LowHealth.getElement()
+					if(ChosenPlayer == 1){
+						            bufCtx.drawImage((ImageElement) BLow.getElement()
 							.cast(), 580, 100);
+						                      }
+					          else if(ChosenPlayer == 2){
+					            bufCtx.drawImage((ImageElement) MLow.getElement()
+					                .cast(), 580, 100);
+					            }
+					          else if (ChosenPlayer == 3){
+					            bufCtx.drawImage((ImageElement) HLow.getElement()
+					                .cast(), 580, 100);
+					          }
 				}
 
 				// Draw EnemyHealth Bar that scales based on health size
@@ -403,8 +495,18 @@ public class GameUI extends Composite {
 						200);
 
 				// Draw Sprite for character
-				bufCtx.drawImage((ImageElement) Defeat.getElement().cast(), 50,
+				if (ChosenPlayer == 1){
+					        bufCtx.drawImage((ImageElement) BWin.getElement().cast(), 50,
+					            200);
+					        }
+					        else if (ChosenPlayer == 2){
+					        bufCtx.drawImage((ImageElement) MWin.getElement().cast(), 50,
+					            200);
+					        }
+					        else if (ChosenPlayer == 3){
+					        bufCtx.drawImage((ImageElement) HFull.getElement().cast(), 50,
 						200);
+					        }
 				
 				// Update global win/lose values
 				victoryBool = false;

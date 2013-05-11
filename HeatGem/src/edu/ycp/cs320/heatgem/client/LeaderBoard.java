@@ -34,11 +34,8 @@ public class LeaderBoard extends Composite {
 		
 	    t.setText(0, 0, "Username");
 	    t.setText(0, 1, "High Score");
-	    t.setText(0, 2, "Time");
-	    t.setText(0, 3, "Experience");
-	    t.setText(0, 4, "Level");
-	    t.setText(0, 5, "Wins");
-	    t.setText(0, 6, "Losses");
+	    t.setText(0, 2, "Wins");
+	    t.setText(0, 3, "Losses");
 	    t.setBorderWidth(1);
 	    
 
@@ -95,19 +92,13 @@ public class LeaderBoard extends Composite {
 				for (int i = 0; i < highScoreList.length; i++) {
 				    t.setText(i+1, 0, "");
 					Integer score = highScoreList[i].getHighScore();
-					Integer time = 0;
-					Integer experience = highScoreList[i].getExperience();
-					Integer level = highScoreList[i].getLevel();
 					Integer wins = highScoreList[i].getWins();
 					Integer losses = highScoreList[i].getLosses();
 					
 					t.setText(i+1, 0, highScoreList[i].getName());
 					t.setText(i+1, 1, score.toString());
-					t.setText(i+1, 2, time.toString());
-					t.setText(i+1, 3, experience.toString());
-					t.setText(i+1, 4, level.toString());
-					t.setText(i+1, 5, wins.toString());
-					t.setText(i+1, 6, losses.toString());
+					t.setText(i+1, 2, wins.toString());
+					t.setText(i+1, 3, losses.toString());
 					
 				}
 			    

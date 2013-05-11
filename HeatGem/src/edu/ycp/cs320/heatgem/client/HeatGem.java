@@ -45,8 +45,13 @@ public class HeatGem implements EntryPoint {
 		"Candle.gif",
 		"black_box.png",
 		"heat_gem_vid.gif",
-		"bottom_black_box.png"
+		"bottom_black_box.png",
 //		"Layer1.png", "Layer2.png", "Layer3.png", "Layer4.png", "Layer5.png", "Layer6.png", "Layer7.png", "Layer8.png", "Layer9.png", "Layer10.png", "Layer11.png", "Layer12.png", "Layer13.png", "Layer14.png", "Layer15.png",
+	    "BabcockFull.png", "BabcockMedium.png", "BabcockHurt.png", "BabcockWin.png",
+	    "HovemeyerFull.png", "HovemeyerMedium.png", "HovemeyerLow.png",
+	    "MoscolaFull.png", "MoscolaLow.png", "MoscolaMedium.png", "MoscolaWin.png",
+	    "Hovemeyer.png", "HovemeyerSelected.png", "Moscola.png", "MoscolaSelected.png", 
+	    "Babcock.png", "BabcockSelected.png"
 	};
 	private static Map<String, Image> imageMap = new HashMap<String, Image>();
 	
