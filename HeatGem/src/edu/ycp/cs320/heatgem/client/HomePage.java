@@ -54,8 +54,8 @@ public class HomePage extends Composite {
 		InlineLabel WelcomeLabel = new InlineLabel("Welcome to Heat Gem, the interactive game site!");
 		WelcomeLabel.setStyleName("gwt-InlineLabel-redness");
 		layoutPanel.add(WelcomeLabel);
-		layoutPanel.setWidgetLeftWidth(WelcomeLabel, 13.0, Unit.PX, 305.0, Unit.PX);
-		layoutPanel.setWidgetTopHeight(WelcomeLabel, 58.0, Unit.PX, 18.0, Unit.PX);
+		layoutPanel.setWidgetLeftWidth(WelcomeLabel, 13.0, Unit.PX, 451.0, Unit.PX);
+		layoutPanel.setWidgetTopHeight(WelcomeLabel, 58.0, Unit.PX, 28.0, Unit.PX);
 
 		tabViewLayoutPanel = new LayoutPanel();
 		layoutPanel.add(tabViewLayoutPanel);

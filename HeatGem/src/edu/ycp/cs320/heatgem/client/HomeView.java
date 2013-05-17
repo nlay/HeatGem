@@ -1,5 +1,6 @@
 package edu.ycp.cs320.heatgem.client;
 
+import com.google.gwt.media.client.Audio;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.LayoutPanel;
@@ -23,15 +24,11 @@ public class HomeView extends Composite {
 	private Image black_boxb;
 	private Image text;
 	
-	
 	public HomeView() {
-		
 		
 		LayoutPanel layoutPanel = new LayoutPanel();
 		initWidget(layoutPanel);
 		layoutPanel.setSize("800px", "480px");
-		
-
 		
 		candle = new Image(); 		
 		layoutPanel.add(candle);
@@ -73,6 +70,12 @@ public class HomeView extends Composite {
 	
 				public void startScroll() {
 					GWT.log("setScroll called");
+					HeatGem.PlayMusic();
+					HeatGem.StopMoscola();
+					HeatGem.StopBabcock();
+					HeatGem.StopHovemeyer();
+					HeatGem.StopLeaderboards();
+					HeatGem.StopProfile();
 									
 
 					candle.setUrl(GWT.getModuleBaseForStaticFiles() + "Candle.gif");
@@ -86,11 +89,6 @@ public class HomeView extends Composite {
 					timer.scheduleRepeating(1000/10);
 				}
 				
-
-				
-				
-				
-
 				protected void Draw() {
 
 				

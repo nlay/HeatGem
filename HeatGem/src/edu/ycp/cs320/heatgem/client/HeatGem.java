@@ -6,6 +6,7 @@ import java.util.Map;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.media.client.Audio;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -99,4 +100,112 @@ public class HeatGem implements EntryPoint {
 		}
 		return image;
 	}
+	
+	//Load ALL the music files
+		private static Audio Music;
+
+		{
+		    Music = Audio.createIfSupported();
+		    Music.setSrc(GWT.getModuleBaseForStaticFiles() + "MusicOgg.ogg");
+		    
+		}
+		private static Audio HBattle;
+
+		{
+		    HBattle = Audio.createIfSupported();
+		    HBattle.setSrc(GWT.getModuleBaseForStaticFiles() + "hovemeyer.ogg");
+		    
+		}
+		private static Audio MBattle;
+
+		{
+		    MBattle = Audio.createIfSupported();
+		    MBattle.setSrc(GWT.getModuleBaseForStaticFiles() + "moscola.ogg");
+		    
+		}
+		private static Audio BBattle;
+
+		{
+		    BBattle = Audio.createIfSupported();
+		    BBattle.setSrc(GWT.getModuleBaseForStaticFiles() + "babcock.ogg");
+		    
+		}
+		private static Audio Attack;
+
+		{
+			Attack = Audio.createIfSupported();
+			Attack.setSrc(GWT.getModuleBaseForStaticFiles() + "attack.ogg");
+		    
+		}
+		private static Audio Heal;
+
+		{
+			Heal = Audio.createIfSupported();
+			Heal.setSrc(GWT.getModuleBaseForStaticFiles() + "heal.ogg");
+		    
+		}
+		private static Audio PMusic;
+
+		{
+			PMusic = Audio.createIfSupported();
+			PMusic.setSrc(GWT.getModuleBaseForStaticFiles() + "profile.ogg");
+		    
+		}
+		private static Audio LMusic;
+
+		{
+			LMusic = Audio.createIfSupported();
+			LMusic.setSrc(GWT.getModuleBaseForStaticFiles() + "leaderboard.ogg");
+		    
+		}
+		//Music
+		public static void PlayMusic(){
+		    Music.play();
+		}
+		public static void StopMusic(){
+			Music.pause();
+		}
+		//Hovemeyer Battle Music
+		public static void PlayHovemeyer(){
+			HBattle.play();
+		}
+		public static void StopHovemeyer(){
+			HBattle.pause();
+		}
+		//Moscola Battle Music
+		public static void PlayMoscola(){
+			MBattle.play();
+		}
+		public static void StopMoscola(){
+			MBattle.pause();
+		}
+		//Babcock Battle Music
+		public static void PlayBabcock(){
+			BBattle.play();
+		}
+		public static void StopBabcock(){
+			BBattle.pause();
+		}
+		//Attack sound
+		public static void PlayAttack(){
+		    Attack.play();
+		}
+		//Heal sound
+		public static void PlayHeal(){
+		    Heal.play();
+		}
+		//Profile music
+		public static void PlayProfile(){
+		    PMusic.play();
+		}
+		public static void StopProfile(){
+			PMusic.pause();
+		}
+		//Leaderboards music
+		public static void PlayLeaderboards(){
+		    LMusic.play();
+		}
+		public static void StopLeaderboards(){
+			LMusic.pause();
+		}
 }

@@ -42,6 +42,15 @@ public class ProfileView extends Composite {
 	 */
 	public ProfileView() {
 		activate();
+		
+		//Stop music 
+		HeatGem.StopMoscola();
+		HeatGem.StopBabcock();
+		HeatGem.StopHovemeyer();
+		HeatGem.StopMusic();
+		HeatGem.StopLeaderboards();
+		HeatGem.PlayProfile();
+				
 		LayoutPanel layoutPanel = new LayoutPanel();
 		initWidget(layoutPanel);
 		layoutPanel.setSize("568px", "472px");

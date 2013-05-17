@@ -29,6 +29,13 @@ public class LoginView extends Composite {
 	private Button loginButton;
 	public LoginView() {
 
+		HeatGem.StopMoscola();
+		HeatGem.StopBabcock();
+		HeatGem.StopHovemeyer();
+		HeatGem.StopMusic();
+		HeatGem.StopLeaderboards();
+		HeatGem.StopProfile();
+
 		LayoutPanel layoutPanel = new LayoutPanel();
 		layoutPanel.setStyleName("gwt-Label-hyperlink");
 		initWidget(layoutPanel);

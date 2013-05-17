@@ -154,20 +154,26 @@ public class GameUI extends Composite {
 			@Override
 			public void onMouseDown(MouseDownEvent event) {
 				if (gamestate == 0) { // Menu
+					// Play Babcock
 			        if ((MouseX >= 275 && MouseX <= 553)
 					            && (MouseY >= 150 && MouseY <= 177)) {
 					          ChosenPlayer = 1;
 					          gamestate = 1;
+					          HeatGem.PlayBabcock();
 			        }
+			        //Play Moscola
 			        else if ((MouseX >= 275 && MouseX <= 556)
 			            && (MouseY >= 190 && MouseY <= 217)) {
 			          ChosenPlayer = 2;
 			          gamestate = 1;
+			          HeatGem.PlayMoscola();
 			        }
+			        //Play Hovemeyer
 			        else if ((MouseX >= 250 && MouseX <= 583)
 			            && (MouseY >= 230 && MouseY <= 266)) {
 			          ChosenPlayer = 3;
 						gamestate = 1;
+						HeatGem.PlayHovemeyer();
 					}
 				} else {
 					if (BattleState.battleState() == 0) { // If No one has one,
@@ -175,7 +181,7 @@ public class GameUI extends Composite {
 															// continue
 						if ((MouseX > 380 && MouseX < 455)
 								&& (MouseY > 360 && MouseY < 390)) {
-
+							HeatGem.PlayAttack();
 							Logic.doBattle(player1, player2);
 							//Set localvariable to store and print the player's health change
 							HealthMove = PrevHealth - player1.getHealth();
@@ -185,11 +191,11 @@ public class GameUI extends Composite {
 							HealthMove2 *= -1;
 							
 							PrevHealth = player1.getHealth();
-              PrevHealth2 = player2.getHealth();
+							PrevHealth2 = player2.getHealth();
 							
 						} else if ((MouseX > 380 && MouseX < 455)
 								&& (MouseY > 410 && MouseY < 440)) {
-
+							HeatGem.PlayHeal();
 							Logic.doHeal(player1, player2);
 
 				            //Set localvariable to store and print the player's health change
@@ -249,7 +255,13 @@ public class GameUI extends Composite {
 		HMed = HeatGem.getImage("HovemeyerMedium.png");
 		HLow = HeatGem.getImage("HovemeyerLow.png");
 
-
+		HeatGem.StopMusic();
+		HeatGem.StopBabcock();
+		HeatGem.StopHovemeyer();
+		HeatGem.StopMoscola();
+		HeatGem.StopLeaderboards();
+		HeatGem.StopProfile();
+		
 		game = new Game();
 		player1 = new Player("Player");
 		player2 = new Player("Monster");
@@ -272,22 +284,18 @@ public class GameUI extends Composite {
 	
 
 	public void setUsername(String username) {
-		//NICK
 		this.username = username;
 	}
 	
 	public void setWins(int wins) {
-		//NICK
 		this.wins = wins;
 	}
 	
 	public void setLosses(int losses) {
-		//NICK
 		this.losses = losses;
 	}
 
 	public void activate() {
-		//NICK
 		RPC.userService.getUserProfile(username, new AsyncCallback <UserProfile>() {
 
 			@Override
@@ -391,31 +399,28 @@ public class GameUI extends Composite {
 					bufCtx.setFillStyle("green");
 					// Draw Sprite for Enemy
 					          
-					          ///
-					          /// B appreviation is Babcock, M for Moscola, and H for Hovemeyer
-					          ///
-					          
-					          if(ChosenPlayer == 1){ 
-					            bufCtx.drawImage((ImageElement) BFull.getElement()
+		          ///
+		          /// B appreviation is Babcock, M for Moscola, and H for Hovemeyer
+		          ///
+		          
+					if(ChosenPlayer == 1){ 
+						bufCtx.drawImage((ImageElement) BFull.getElement()
 							.cast(), 580, 100);
-					          }
-					                    else if(ChosenPlayer == 2){
-					                      bufCtx.drawImage((ImageElement) MFull.getElement()
-					                          .cast(), 580, 100);
-					                      }
-					                    else if (ChosenPlayer == 3){
-					                      bufCtx.drawImage((ImageElement) HFull.getElement()
-					                          .cast(), 580, 100);
-					                    }
-					                    
-					                    
-					                    
-					                    //Medium Health
+					}
+	                else if(ChosenPlayer == 2){
+	                	bufCtx.drawImage((ImageElement) MFull.getElement()
+                			.cast(), 580, 100);
+	                  }
+	                else if (ChosenPlayer == 3){
+	                	bufCtx.drawImage((ImageElement) HFull.getElement()
+                			.cast(), 580, 100);
+	                }                    
+				//Medium Health
 				} else if (player2Health <= 50 && player2Health > 25) {
 					bufCtx.setFillStyle("yellow");
 					// Draw Sprite for Enemy
 					if(ChosenPlayer == 1){
-						            bufCtx.drawImage((ImageElement) BMed.getElement()
+						bufCtx.drawImage((ImageElement) BMed.getElement()
 							.cast(), 580, 100);
 						                      }
 					          else if(ChosenPlayer == 2){

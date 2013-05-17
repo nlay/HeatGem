@@ -20,6 +20,14 @@ public class LeaderBoard extends Composite {
 	private FlexTable t = new FlexTable();
 	
 	public LeaderBoard(){
+		
+		//Stop all music
+		HeatGem.StopMoscola();
+		HeatGem.StopBabcock();
+		HeatGem.StopHovemeyer();
+		HeatGem.StopMusic();
+		HeatGem.PlayLeaderboards();
+		HeatGem.StopProfile();
 
 	    updateHighScoreList();
 	    
@@ -31,34 +39,18 @@ public class LeaderBoard extends Composite {
 		layoutPanel.setWidgetLeftWidth(t, 32.0, Unit.PX, 400.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(t, 14.0, Unit.PX, 400.0, Unit.PX);
 		
-		
 	    t.setText(0, 0, "Username");
 	    t.setText(0, 1, "High Score");
 	    t.setText(0, 2, "Wins");
 	    t.setText(0, 3, "Losses");
 	    t.setBorderWidth(1);
 	    
-
-	    
-	    
-	    // DEBUG testing values to be deleted later
-//	    Label lbltestHigh = new Label("testHigh");
-//	    layoutPanel.add(lbltestHigh);
-//	    layoutPanel.setWidgetLeftWidth(lbltestHigh, 20.0, Unit.PX, 56.0, Unit.PX);
-//	    layoutPanel.setWidgetTopHeight(lbltestHigh, 88.0, Unit.PX, 18.0, Unit.PX);
-//	    
-//	    Label lbltestLow = new Label("testLow");
-//	    layoutPanel.add(lbltestLow);
-//	    layoutPanel.setWidgetLeftWidth(lbltestLow, 20.0, Unit.PX, 56.0, Unit.PX);
-//	    layoutPanel.setWidgetTopHeight(lbltestLow, 119.0, Unit.PX, 18.0, Unit.PX);
-		
 	}
 	
 	public void setUsername(String username) {
 		this.username = username;
 	}
 	
-	// DEBUG for those not named Nick, ignore this function for now
 	private void updateHighScoreList() {
 		RPC.userService.updateLeaderboard(new AsyncCallback<UserProfile[]>() {
 
